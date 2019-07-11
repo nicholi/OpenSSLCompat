@@ -33,14 +33,14 @@ namespace OpenSSLCompat
 
             // loop multiple encryptions and count failures
             var failures = 0;
-            for (var i = 0; i < 500; i++)
+            for (var i = 0; i < 50; i++)
             {
                 if (!EncryptDecrypt(sshProtect, keyPair, plainText, useSameKey ? symmetricKey : null))
                 {
                     failures++;
                 }
             }
-            Console.Write($"Total Failures: {failures}");
+            Console.WriteLine($"Total Failures: {failures}");
         }
 
         // encrypt with C#
