@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -111,6 +112,22 @@ namespace OpenSSLCompat
                 {
                     // never happens
                     Console.WriteLine("C# failed to decrypt");
+                }
+
+                // test the raw symmetric key we used to encrypt data in C#
+                // against the symmetric key obtained when openssl decrypted the key
+                using (var reader = new BinaryReader(File.Open(symmetricKeyFile, FileMode.Open)))
+                {
+                    var symmetricBytes = new List<byte>(symmetricKey.Length);
+                    while (reader.BaseStream.Position < reader.BaseStream.Length)
+                    {
+                        symmetricBytes.Add(reader.ReadByte());
+                    }
+                    if (!symmetricBytes.SequenceEqual(symmetricKey))
+                    {
+                        Console.WriteLine("The keys don't match!!");
+                    }
+                    // if the above never fires, that means the symmetric key is coming through a-ok
                 }
             }
 
