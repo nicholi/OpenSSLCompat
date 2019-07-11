@@ -127,10 +127,12 @@ namespace OpenSSLCompat
                 proc.StartInfo.RedirectStandardOutput = true;
                 proc.StartInfo.RedirectStandardError = true;
 
-                proc.OutputDataReceived += (sender, data) => {
+                proc.OutputDataReceived += (sender, data) =>
+                {
                     //Console.WriteLine($"{consolePrefix}:stdout:{data.Data}");
                 };
-                proc.ErrorDataReceived += (sender, data) => {
+                proc.ErrorDataReceived += (sender, data) =>
+                {
                     //Console.WriteLine($"{consolePrefix}:stderr:{data.Data}");
                 };
 

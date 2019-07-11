@@ -28,11 +28,13 @@ namespace OpenSSLCompat
                 proc.StartInfo.RedirectStandardOutput = true;
                 proc.StartInfo.RedirectStandardError = true;
 
-                proc.OutputDataReceived += (sender, data) => {
+                proc.OutputDataReceived += (sender, data) =>
+                {
                     //Console.WriteLine($"ssh-keygen:{data.Data}");
                     publicKeyPKCS8.Append(data.Data + "\n");
                 };
-                proc.ErrorDataReceived += (sender, data) => {
+                proc.ErrorDataReceived += (sender, data) =>
+                {
                     //Console.WriteLine($"ssh-keygen:{data.Data}");
                 };
 
