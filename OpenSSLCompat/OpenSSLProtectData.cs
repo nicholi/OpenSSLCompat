@@ -61,18 +61,15 @@ namespace OpenSSLCompat
                     Buffer.BlockCopy(bytes, 0, key, 0, key.Length);
                     Buffer.BlockCopy(bytes, key.Length, iv, 0, iv.Length);
 
-                    //DeriveKeyAndIV(secret, saltBytes, HASH_ALGORITHM, 1, out var key, out var iv);
-
-                    aesAlgorithm.BlockSize = 128;
+                    aesAlgorithm.Mode = CipherMode.CBC;
                     aesAlgorithm.KeySize = 256;
+                    aesAlgorithm.BlockSize = 128;
+                    aesAlgorithm.Padding = PaddingMode.PKCS7;
                     aesAlgorithm.Key = key;
                     aesAlgorithm.IV = iv;
-                    aesAlgorithm.Mode = CipherMode.CBC;
-                    aesAlgorithm.Padding = PaddingMode.PKCS7;
 
                     using (var encryptor = aesAlgorithm.CreateEncryptor())
                     {
-                            Console.WriteLine(data.Length);
                         var encryptedBytes = encryptor.TransformFinalBlock(data, 0, data.Length);
                         var encryptedWithSaltBytes = new byte[OPENSSL_SALT_PREFIX_BYTES.Length + saltBytes.Length + encryptedBytes.Length];
 
